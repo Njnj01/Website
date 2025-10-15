@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>اسمك الكامل — سيرة ذاتية تقنية</title>
+  <meta name="description" content="سيرة ذاتية تقنية حديثة، باحترافية عالية وتجربة مستخدم متقنة." />
+  <meta name="theme-color" content="#0b0f14" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="اسمك الكامل — سيرة ذاتية تقنية">
+  <meta property="og:description" content="موقع شخصي فاخر يعرض خبراتي ومهاراتي التقنية.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/me.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====== Reset & Base ====== */
+    *,*::before,*::after{box-sizing:border-box}
+    :root{
+      --bg: #0b0f14;
+      --bg-2: #0d1219;
+      --card: rgba(255,255,255,.06);
+      --card-2: rgba(255,255,255,.08);
+      --text: #e9eef7;
+      --muted:#a9b4c4;
+      --primary:#5eead4; /* teal */
+      --accent:#7c3aed;  /* violet */
+      --brand-grad: radial-gradient(1200px 600px at 75% -10%, rgba(124,58,237,.18), transparent 60%),
+                    radial-gradient(900px 450px at -10% 30%, rgba(94,234,212,.12), transparent 60%),
+                    linear-gradient(180deg, var(--bg), var(--bg-2));
+      --radius: 18px;
+      --shadow-lg: 0 20px 60px -20px rgba(0,0,0,.6), 0 40px 120px -60px rgba(94,234,212,.15);
+      --ring: conic-gradient(from 0deg, #5eead4, #22d3ee, #6366f1, #7c3aed, #5eead4);
+      --speed: 420ms;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #f6f8fb; --bg-2:#ffffff; --text:#0d1321; --muted:#506176;
+        --card: rgba(10,20,30,.08); --card-2: rgba(10,20,30,.06);
+      }
+      body.light{ background: linear-gradient(180deg,#f7f9ff,#f0f3fa); }
+    }
+    *{outline-color: var(--accent)}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:"IBM Plex Sans Arabic","Cairo",system-ui,-apple-system,Segoe UI,Roboto;
+      color:var(--text); background: var(--brand-grad); line-height:1.6; -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{width:min(1140px, 92vw); margin-inline:auto}
+
+    /* ====== App Background Grid ====== */
+    .bg-grid{
+      position:fixed; inset:0; z-index:-2;
+      background-image:
+        radial-gradient(circle at 25px 25px, rgba(255,255,255,.06) 2px, transparent 2px),
+        radial-gradient(circle at 75px 75px, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size:100px 100px, 100px 100px;
+      mask-image: radial-gradient(1200px 600px at 80% -10%, rgba(0,0,0,.8), transparent 60%);
+      pointer-events:none;
+    }
+    canvas#space{position:fixed; inset:0; z-index:-3; opacity:.25}
+
+    /* ====== Header ====== */
+    header{
+      position:sticky; top:0; z-index:40; backdrop-filter:saturate(140%) blur(10px);
+      background: linear-gradient(to bottom, rgba(10,14,20,.75), rgba(10,14,20,.35));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; padding:14px 0;
+    }
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px}
+    .brand .dot{width:12px; height:12px; background:var(--ring); border-radius:50%;
+      box-shadow:0 0 0 4px rgba(124,58,237,.18), 0 0 24px 2px rgba(124,58,237,.45); }
+    .nav a{color:var(--muted); font-weight:600; padding:10px 14px; border-radius:12px}
+    .nav a:hover{color:var(--text); background:var(--card)}
+    .menu{display:flex; gap:6px; align-items:center}
+    .btn{
+      appearance:none; border:0; border-radius:14px; padding:12px 16px; font-weight:700; cursor:pointer;
+      color:#0d1321; background:linear-gradient(135deg,#5eead4,#22d3ee 60%,#6366f1);
+      box-shadow:0 8px 24px rgba(94,234,212,.25), inset 0 0 0 1px rgba(255,255,255,.12);
+      transition:transform var(--speed) cubic-bezier(.2,.8,.2,1), box-shadow var(--speed);
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 16px 36px rgba(94,234,212,.35)}
+    .btn.secondary{background:var(--card); color:var(--text); box-shadow:none; border:1px solid rgba(255,255,255,.08)}
+    .pill{border-radius:999px; padding:8px 14px; background:rgba(94,234,212,.12); color:#9af0e3; font-weight:700; font-size:.9rem}
+
+    .theme-toggle{
+      width:42px; height:42px; border-radius:12px; border:1px solid rgba(255,255,255,.1);
+      display:grid; place-items:center; background:var(--card); color:var(--text); cursor:pointer
+    }
+    .sr-only{position:absolute; left:-9999px}
+
+    /* ====== Hero ====== */
+    .hero{padding:86px 0 48px}
+    .hero-grid{
+      display:grid; grid-template-columns: 1.2fr .9fr; gap:44px; align-items:center;
+    }
+    @media (max-width: 960px){ .hero-grid{grid-template-columns:1fr; gap:26px} }
+
+    .headline{
+      display:flex; flex-direction:column; gap:18px;
+    }
+    .headline h1{
+      margin:0; font-size:clamp(28px, 4.2vw, 52px); line-height:1.12; font-weight:800;
+      letter-spacing:.2px;
+      background: linear-gradient(180deg, #fff, #c8d4e4 60%, #7dd3fc);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-wrap:balance;
+    }
+    .subtitle{font-size:clamp(16px, 2.1vw, 20px); color:var(--muted)}
+    .meta{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+
+    /* Avatar with pro framing */
+    .avatar-wrap{
+      position:relative; width:min(480px, 86vw); margin-inline:auto;
+      aspect-ratio: 1/1.15; display:grid; place-items:center;
+      isolation:isolate; transform-style:preserve-3d;
+    }
+    .ring{
+      position:absolute; inset:auto; width:92%; height:92%; border-radius:28px;
+      background: var(--ring); filter:saturate(120%);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 60%, #000 62%);
+      mask: radial-gradient(circle at 50% 50%, transparent 60%, #000 62%);
+      opacity:.7; animation:spin 18s linear infinite;
+    }
+    .ring::after{
+      content:""; position:absolute; inset:-2px; border-radius:28px;
+      background:linear-gradient(180deg, rgba(94,234,212,.16), rgba(124,58,237,.16));
+      filter: blur(20px); z-index:-1;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .avatar-card{
+      position:relative; width:86%; height:86%; border-radius:24px; overflow:hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow-lg);
+      transform: translateZ(0);
+    }
+    .avatar-card::before{
+      content:""; position:absolute; inset:0; background:
+        radial-gradient(400px 200px at 20% -10%, rgba(94,234,212,.15), transparent 60%),
+        radial-gradient(400px 200px at 120% 80%, rgba(124,58,237,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .avatar{
+      position:absolute; inset:0; object-fit:contain; width:100%; height:100%;
+      transform: translateZ(20px);
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,.45));
+      animation: floaty 6s ease-in-out infinite;
+    }
+    @keyframes floaty{0%,100%{transform:translate3d(0,2px,20px)}50%{transform:translate3d(0,-6px,20px)}}
+
+    .scroll-hint{
+      display:flex; align-items:center; gap:10px; color:var(--muted); margin-top:18px; font-weight:700
+    }
+    .scroll-hint .dot{width:8px; height:8px; border-radius:50%; background:#9af0e3; box-shadow:0 0 16px 2px rgba(94,234,212,.55)}
+    .cursor{color:#9af0e3; font-weight:800; animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    /* ====== Sections ====== */
+    section{padding:56px 0}
+    .section-title{
+      font-size:clamp(20px, 2.6vw, 28px); margin:0 0 18px; font-weight:800
+    }
+    .lead{color:var(--muted); margin:0 0 24px}
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    @media (max-width: 960px){ .cards{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .cards{grid-template-columns:1fr} }
+
+    .card{
+      background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius);
+      padding:18px; transition:transform var(--speed), background var(--speed), border-color var(--speed);
+      position:relative; overflow:hidden;
+    }
+    .card:hover{transform:translateY(-4px); background:var(--card-2); border-color:rgba(255,255,255,.16)}
+    .card .icon{
+      width:40px; height:40px; display:grid; place-items:center; border-radius:12px;
+      background:linear-gradient(135deg, rgba(94,234,212,.2), rgba(124,58,237,.2));
+      color:#9af0e3; margin-bottom:8px
+    }
+    .skills{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{
+      padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+      color:var(--text); font-weight:700; font-size:.92rem
+    }
+
+    /* Timeline */
+    .timeline{position:relative; margin-top:10px}
+    .timeline::before{content:""; position:absolute; inset:0 0 0 18px; width:2px; background:linear-gradient(#5eead4,#7c3aed); border-radius:2px}
+    .step{display:grid; grid-template-columns:36px 1fr; gap:14px; margin-bottom:18px}
+    .step .dot{width:36px; height:36px; border-radius:50%; background:var(--ring); border:2px solid rgba(255,255,255,.35)}
+    .step .content{background:var(--card); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:12px}
+
+    /* Project grid */
+    .project{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .project .thumb{
+      aspect-ratio: 16/10; border-radius:16px; background:
+        radial-gradient(120px 80px at 20% 20%, rgba(94,234,212,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12);
+    }
+
+    /* Achievements counters */
+    .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+    @media (max-width:960px){ .kpis{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:520px){ .kpis{grid-template-columns:1fr} }
+    .kpi{background:var(--card); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px; text-align:center}
+    .kpi .num{font-size:clamp(28px,4vw,44px); font-weight:800; letter-spacing:.5px; background:linear-gradient(180deg,#fff,#bfeaf5); -webkit-background-clip:text; color:transparent}
+
+    /* Contact */
+    .contact{
+      display:grid; grid-template-columns:1.1fr .9fr; gap:16px
+    }
+    @media (max-width: 960px){ .contact{grid-template-columns:1fr} }
+    .form{
+      display:grid; gap:10px; background:var(--card); padding:18px; border-radius:16px; border:1px solid rgba(255,255,255,.12)
+    }
+    .form input,.form textarea{
+      width:100%; background:rgba(0,0,0,.24); border:1px solid rgba(255,255,255,.14); color:var(--text);
+      padding:12px 14px; border-radius:12px; font-family:inherit; font-size:1rem
+    }
+    .form input:focus,.form textarea:focus{border-color:#8b5cf6; box-shadow:0 0 0 3px rgba(124,58,237,.25)}
+    .info-card{background:var(--card); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:18px}
+
+    /* Footer */
+    footer{padding:26px 0 42px; color:var(--muted); text-align:center}
+    .socials{display:flex; gap:10px; justify-content:center}
+    .icon-btn{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--card);
+      border:1px solid rgba(255,255,255,.12); color:var(--text)}
+    .icon-btn:hover{background:var(--card-2)}
+
+    /* Reveal on scroll */
+    [data-reveal]{opacity:0; transform:translateY(16px); transition:opacity .8s ease, transform .8s ease}
+    [data-reveal].visible{opacity:1; transform:none}
+
+    /* Print (CV mode) */
+    @media print{
+      header,.scroll-hint,.bg-grid,#space,#toTop{display:none!important}
+      body{background:#fff; color:#000}
+      .btn,.pill{border:1px solid #999; background:#fff!important; color:#000!important; box-shadow:none}
+      a{color:#000}
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="space" aria-hidden="true"></canvas>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <a class="sr-only" href="#about">تخطي إلى المحتوى</a>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <span>اسمك الكامل</span>
+        <span class="pill">متاح للتعاون</span>
+      </div>
+      <nav class="menu" aria-label="التنقل">
+        <a href="#about">نبذة</a>
+        <a href="#skills">المهارات</a>
+        <a href="#resume">السيرة</a>
+        <a href="#achievements">الإنجازات</a>
+        <a href="#projects">المشاريع</a>
+        <a href="#contact" class="btn secondary">تواصل</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="تبديل السمة">
+          <!-- moon / sun -->
+          <svg id="moon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero container" id="home">
+      <div class="hero-grid">
+        <div class="headline" data-reveal>
+          <div class="pill">تقنية • برمجة • ابتكار</div>
+          <h1>
+            أبني تجارب ويب راقية، آمنة وسريعة — بلمسة تصميم فاخرة ومعمارية برمجية متينة.
+          </h1>
+          <p class="subtitle">
+            <strong id="typed">مهندس برمجيات</strong><span class="cursor">|</span> — واجهات حديثة، أداء عالٍ، وUX يسبق التوقع.
+          </p>
+          <div class="meta">
+            <div class="pill" title="الموقع متجاوب">⚡ أداء فائق</div>
+            <div class="pill">🔒 معايير أمان</div>
+            <div class="pill">🎯 تركيز على UX</div>
+          </div>
+          <div class="actions">
+            <a href="assets/CV.pdf" class="btn" download>تحميل السيرة PDF</a>
+            <a href="#projects" class="btn secondary">استعراض الأعمال</a>
+          </div>
+          <div class="scroll-hint"><span class="dot"></span> اسحب للأسفل — المحتوى التالي مخصص لك</div>
+        </div>
+
+        <!-- AVATAR -->
+        <div class="avatar-wrap" data-tilt data-reveal>
+          <div class="ring" aria-hidden="true"></div>
+          <figure class="avatar-card">
+            <!-- ملاحظة: ضع صورتك هنا. غيّر src للمسار الصحيح -->
+            <img class="avatar" src="assets/me.png" alt="صورة شخصية" loading="eager" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container">
+      <h2 class="section-title" data-reveal>من أنا</h2>
+      <p class="lead" data-reveal>
+        مطوّر واجهات ومهندس برمجيات أهوى التقنية حتى أدق تفاصيلها. أصنع واجهات مدهشة، نظيفة، وذكية — وأحوّل الأفكار لمنتجات عالية الجودة تعمل بسلاسة على كل الأجهزة، مع عناية فائقة بالوصولية والأداء.
+      </p>
+      <div class="cards" data-reveal>
+        <div class="card">
+          <div class="icon">⚙️</div>
+          <h3>هندسة أمامية متينة</h3>
+          <p>تصميم معماري واضح، مكوّنات قابلة لإعادة الاستخدام، وكود مُهيكل سهل الصيانة.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🎨</div>
+          <h3>هوية بصرية فاخرة</h3>
+          <p>جماليات متوازنة، حركات دقيقة، وتفاصيل ترفع قيمة العلامة الرقمية.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🚀</div>
+          <h3>أداء + أمان</h3>
+          <p>انتباه صارم للسرعة، التحميل الكسول، والمعايير الأمنية الحديثة.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="container">
+      <h2 class="section-title" data-reveal>المهارات</h2>
+      <div class="card" data-reveal>
+        <div class="skills">
+          <span class="chip">HTML5 / Semantics</span>
+          <span class="chip">CSS3 / Grid / Flex / Animations</span>
+          <span class="chip">JavaScript (ES2023)</span>
+          <span class="chip">Responsive & Accessibility</span>
+          <span class="chip">Performance Optimization</span>
+          <span class="chip">UI/UX Prototyping</span>
+          <span class="chip">Design Systems</span>
+          <span class="chip">SEO / Open Graph</span>
+          <span class="chip">Branding & Motion</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME TIMELINE -->
+    <section id="resume" class="container">
+      <h2 class="section-title" data-reveal>السيرة المهنية</h2>
+      <p class="lead" data-reveal>محطات مختصرة — يمكن تخصيصها لاحقاً.</p>
+      <div class="timeline" data-reveal>
+        <div class="step">
+          <div class="dot" aria-hidden="true"></div>
+          <div class="content">
+            <strong>مطور واجهات — مستقل</strong>
+            <div>بناء مواقع عالية الجودة لعلامات ناشئة وشركات تقنية.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="content">
+            <strong>قائد واجهة — منتج ويب</strong>
+            <div>تصميم نظام مكونات، ورفع الأداء 40% عبر تحسينات دقيقة.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="content">
+            <strong>تعليم ذاتي وتقنيات حديثة</strong>
+            <div>تجارب مستمرة على Web APIs، رسوميات CSS، وتقنيات الوصولية.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section id="achievements" class="container">
+      <h2 class="section-title" data-reveal>الإنجازات</h2>
+      <p class="lead" data-reveal>سنضيف التفاصيل التي سترسلها لاحقاً — هذه أرقام تجريبية للعرض.</p>
+      <div class="kpis" data-reveal>
+        <div class="kpi"><div class="num" data-count="24">0</div><div>مشروع منجز</div></div>
+        <div class="kpi"><div class="num" data-count="12">0</div><div>واجهة معاد تصميمها</div></div>
+        <div class="kpi"><div class="num" data-count="98">0</div><div>مؤشر أداء (Lighthouse)</div></div>
+        <div class="kpi"><div class="num" data-count="8">0</div><div>شهادات تقنية</div></div>
+      </div>
+      <div class="cards" data-reveal id="achievementsList">
+        <!-- عناصر الإنجازات ستُحقن من DATA عبر JS -->
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="container">
+      <h2 class="section-title" data-reveal>المشاريع المميزة</h2>
+      <div class="cards" data-reveal id="projectsGrid">
+        <!-- عناصر المشاريع ستُحقن من DATA عبر JS -->
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="container">
+      <h2 class="section-title" data-reveal>تواصل معي</h2>
+      <div class="contact">
+        <form class="form" id="contactForm" data-reveal>
+          <input type="text" name="name" placeholder="الاسم" required>
+          <input type="email" name="email" placeholder="البريد" required>
+          <textarea name="message" rows="5" placeholder="رسالتك" required></textarea>
+          <button class="btn" type="submit">إرسال</button>
+          <small style="color:var(--muted)">لن يتم حفظ أي بيانات على الخادم — استخدام mailto.</small>
+        </form>
+        <div class="info-card" data-reveal>
+          <h3>معلومات سريعة</h3>
+          <p>مستعد للتعاون على مشاريع تقنية جدية — تجربة مستخدم متقنة، هوية رقمية راقية، وجودة تنفيذ عالية.</p>
+          <div class="actions">
+            <a class="btn secondary" id="copyEmail">نسخ البريد</a>
+            <a class="btn" href="https://wa.me/000000000000" target="_blank" rel="noopener">واتساب</a>
+          </div>
+          <div class="socials" style="margin-top:12px">
+            <a class="icon-btn" href="#" aria-label="GitHub" title="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.12.82-.26.82-.58V20.7c-3.34.73-4.04-1.6-4.04-1.6-.54-1.36-1.33-1.72-1.33-1.72-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.25 1.83 1.25 1.06 1.83 2.77 1.3 3.45.99.1-.77.42-1.3.76-1.6-2.67-.31-5.48-1.33-5.48-5.92 0-1.3.47-2.37 1.24-3.2-.12-.31-.54-1.56.12-3.24 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 016 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.68.24 2.93.12 3.24.77.83 1.24 1.9 1.24 3.2 0 4.6-2.81 5.6-5.49 5.91.42.36.81 1.07.81 2.16v3.2c0 .32.21.7.82.58A12 12 0 0012 .5"/></svg>
+            </a>
+            <a class="icon-btn" href="#" aria-label="LinkedIn" title="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3A2.94 2.94 0 0122 6v12a2.94 2.94 0 01-3 3H5a2.94 2.94 0 01-3-3V6a2.94 2.94 0 013-3h14zM8.34 18.34V9.74H6v8.6h2.34zM7.16 8.6a1.36 1.36 0 110-2.72 1.36 1.36 0 010 2.72zM18 18.34v-4.6c0-2.46-1.31-3.6-3.07-3.6a2.66 2.66 0 00-2.41 1.33h-.03V9.74H10.2c.03.73 0 8.6 0 8.6h2.29v-4.8c0-.26.02-.53.1-.72.23-.53.75-1.09 1.63-1.09 1.15 0 1.61.82 1.61 2.02v4.6H18z"/></svg>
+            </a>
+            <a class="icon-btn" href="#" aria-label="X" title="X">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.15 2H21l-6.52 7.45L22 22h-5.97l-4.67-6.06L5.9 22H3.04l6.98-7.97L2 2h6.09l4.25 5.65L18.15 2zm-2.1 18h1.75L8.03 4H6.2l9.85 16z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button id="toTop" class="icon-btn" style="position:fixed; inset:auto 16px 16px auto; z-index:50; display:none" aria-label="العودة للأعلى">⬆️</button>
+
+  <footer class="container">
+    © <span id="year"></span> — اسمك الكامل. جميع الحقوق محفوظة.
+  </footer>
+
+  <script>
+    // ====== Typed effect ======
+    const typedEl = document.getElementById('typed');
+    const roles = ['مهندس برمجيات', 'مطوّر واجهات', 'عاشق التقنية', 'صانع منتجات رقمية'];
+    let idx = 0, pos = 0, dir = 1;
+    function type() {
+      const word = roles[idx];
+      pos += dir;
+      typedEl.textContent = word.slice(0, pos);
+      if (pos === word.length + 8) dir = -1; // hold
+      if (pos === 0) { dir = 1; idx = (idx + 1) % roles.length; }
+      setTimeout(type, dir === 1 ? 70 : 30);
+    }
+    type();
+
+    // ====== Stars / Space background ======
+    const canvas = document.getElementById('space');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let w, h, stars;
+    function resize() {
+      w = canvas.width = innerWidth * devicePixelRatio;
+      h = canvas.height = innerHeight * devicePixelRatio;
+      stars = Array.from({length: Math.min(200, Math.floor(innerWidth/4))}, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random() * 1 + .2,
+        a: Math.random() * .6 + .2
+      }));
+    }
+    addEventListener('resize', resize); resize();
+    function loop() {
+      ctx.clearRect(0,0,w,h);
+      for (const s of stars) {
+        s.x -= s.z; if (s.x < 0) s.x = w;
+        ctx.fillStyle = `rgba(158,235,229,${s.a})`;
+        ctx.fillRect(s.x, s.y, 2 * devicePixelRatio, 2 * devicePixelRatio);
+      }
